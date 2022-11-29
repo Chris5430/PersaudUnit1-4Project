@@ -1,5 +1,7 @@
 package com.example.persaudunit14project;
 
+import javafx.scene.control.Label;
+
 public class Alonzo {
 
     private int difficulty;
@@ -7,9 +9,12 @@ public class Alonzo {
     private int x;
     private int y;
 
-    public Alonzo(int difficulty, boolean day){
+    private Label score;
+
+    public Alonzo(int difficulty, boolean day, Label score){
         this.difficulty = difficulty;
         dayOrNight = day;
+        this.score = score;
         x = 225/difficulty;
         y = 225/difficulty;
     }
@@ -29,6 +34,12 @@ public class Alonzo {
         return dayOrNight;
     }
 
+public int getX(){
+        return x;
+}
 
+public int getY(){
+        return y;
+}
 
 }
