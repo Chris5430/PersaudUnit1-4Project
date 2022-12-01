@@ -24,9 +24,24 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     static int scoreT = 0;
+
+
+
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Label score = new Label("Score: " + scoreT);
+        Runnable countdown = ()->{
+            while(true) {
+                try{Thread.sleep(100);}catch(InterruptedException a){System.out.println(a);}
+                scoreT -= 1;
+               // score.setText("Score: " + scoreT);
+            }
+
+        };
+
+        Thread thread = new Thread(countdown);
         Rectangle rect1 = new Rectangle(140,400, Color.SADDLEBROWN);
         rect1.setX(120);
         rect1.setY(80);
@@ -62,15 +77,18 @@ public class HelloApplication extends Application {
         Label youWin = new Label("You win!!");
         youWin.setTranslateX(160);
         youWin.setTranslateY(90);
+        Button menu = new Button("Return to menu");
+        menu.setTranslateX(360);
+        menu.setTranslateY(400);
         youWin.setFont(new Font("Arial", 90));
-        Group winGroup = new Group(rect1, rect2, rect3, youWin);
+        Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
         Scene win = new Scene(winGroup, 720,480, Color.GREEN);
         easy.setOnAction(e->{
             System.out.println("Easy");
 
-            Label score = new Label("Score: " + scoreT);
-            //score.setTranslateX(-300);
-           // score.setTranslateY(-200);
+
+
+            thread.start();
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
             Alonzo alonzo1 = new Alonzo(1, true, score);
@@ -90,7 +108,13 @@ public class HelloApplication extends Application {
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
                     if(scoreT >= 300){
+                        scoreT = 0;
                         stage.setScene(win);
+                        thread.stop();
+
+                        menu.setOnAction(c->{
+                            stage.setScene(scene);
+                        });
                     }
                 }
             });
@@ -98,7 +122,6 @@ public class HelloApplication extends Application {
         });
         normal.setOnAction(b->{
             System.out.println("Normal");
-            Label score = new Label("Score: " + scoreT);
             //score.setTranslateX(-300);
             // score.setTranslateY(-200);
             Group root1 = new Group(rect1, rect2, rect3, score, view);
@@ -120,14 +143,17 @@ public class HelloApplication extends Application {
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
                     if(scoreT >= 300){
+                        scoreT = 0;
                         stage.setScene(win);
+                        menu.setOnAction(e->{
+                            stage.setScene(scene);
+                        });
                     }
                 }
             });
         });
         hard.setOnAction(c->{
             System.out.println("Hard");
-            Label score = new Label("Score: " + scoreT);
             //score.setTranslateX(-300);
             // score.setTranslateY(-200);
             Group root1 = new Group(rect1, rect2, rect3, score, view);
@@ -136,7 +162,7 @@ public class HelloApplication extends Application {
             if(alonzo1.getDayOrNight()){
                 color = Color.DARKCYAN;
             }else{
-                color = Color.YELLOW;
+                color = Color.BLACK;
             }
             Scene hardMode = new Scene(root1, 720, 480, color);
             stage.setScene(hardMode);
@@ -149,8 +175,13 @@ public class HelloApplication extends Application {
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
                     if(scoreT >= 300){
+                        scoreT = 0;
                         stage.setScene(win);
+                        menu.setOnAction(e->{
+                           stage.setScene(scene);
+                        });
                     }
+
                 }
             });
         });
