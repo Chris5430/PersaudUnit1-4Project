@@ -77,18 +77,21 @@ public class HelloApplication extends Application {
         Label youWin = new Label("You win!!");
         youWin.setTranslateX(160);
         youWin.setTranslateY(90);
+        Label youLose = new Label("You lose!!");
+        youLose.setTranslateX(160);
+        youLose.setTranslateY(90);
         Button menu = new Button("Return to menu");
         menu.setTranslateX(360);
         menu.setTranslateY(400);
         youWin.setFont(new Font("Arial", 90));
-        Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
-        Scene win = new Scene(winGroup, 720,480, Color.GREEN);
+        youLose.setFont(new Font("Arial", 90));
+
         easy.setOnAction(e->{
             System.out.println("Easy");
 
 
 
-            thread.start();
+            //thread.start();
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
             Alonzo alonzo1 = new Alonzo(1, true, score);
@@ -101,21 +104,32 @@ public class HelloApplication extends Application {
             stage.setScene(easyMode);
             view.setFitHeight(alonzo1.getY());
             view.setFitWidth(alonzo1.getX());
+           // MouseEvent.MOUSE_CLICKED{
+
+            }
             view.setOnMouseClicked(a->{
                 if(a.getX() > view.getX() && a.getX() < view.getX() + view.getFitWidth() && a.getY() > view.getY() && a.getY() < view.getY() + view.getFitHeight()){
                     scoreT += 10;
                     score.setText("Score: " + scoreT);
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
+                    System.out.println("d");
                     if(scoreT >= 300){
+                        Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
+                        Scene win = new Scene(winGroup, 720,480, Color.DARKOLIVEGREEN);
                         scoreT = 0;
                         stage.setScene(win);
-                        thread.stop();
+                       // thread.stop();
 
                         menu.setOnAction(c->{
                             stage.setScene(scene);
                         });
                     }
+                }else{
+                    System.out.println("p");
+                    Group loseGroup = new Group(rect1, rect2, rect3, youLose, menu);
+                    Scene lose = new Scene(loseGroup, 720, 480, Color.RED);
+                    stage.setScene(lose);
                 }
             });
 
@@ -143,6 +157,8 @@ public class HelloApplication extends Application {
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
                     if(scoreT >= 300){
+                        Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
+                        Scene win = new Scene(winGroup, 720,480, Color.DARKOLIVEGREEN);
                         scoreT = 0;
                         stage.setScene(win);
                         menu.setOnAction(e->{
@@ -176,6 +192,8 @@ public class HelloApplication extends Application {
                     view.setY((Math.random() * (480 - view.getFitHeight())));
                     if(scoreT >= 300){
                         scoreT = 0;
+                        Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
+                        Scene win = new Scene(winGroup, 720,480, Color.DARKOLIVEGREEN);
                         stage.setScene(win);
                         menu.setOnAction(e->{
                            stage.setScene(scene);
