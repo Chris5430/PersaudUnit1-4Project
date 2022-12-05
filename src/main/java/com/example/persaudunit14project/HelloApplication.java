@@ -23,7 +23,7 @@ import java.util.Date;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-    static int scoreT = 0;
+    static int scoreT = 50;
 
 
 
@@ -32,16 +32,9 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Label score = new Label("Score: " + scoreT);
-        Runnable countdown = ()->{
-            while(true) {
-                try{Thread.sleep(100);}catch(InterruptedException a){System.out.println(a);}
-                scoreT -= 1;
-               // score.setText("Score: " + scoreT);
-            }
 
-        };
 
-        Thread thread = new Thread(countdown);
+
         Rectangle rect1 = new Rectangle(140,400, Color.SADDLEBROWN);
         rect1.setX(120);
         rect1.setY(80);
@@ -55,7 +48,7 @@ public class HelloApplication extends Application {
         normal.setText("Normal");
         Button hard = new Button();
         hard.setText("Hard");
-        Image alonzo = new Image("C:\\Users\\BT_3W2_31\\Desktop\\Alonzo.PNG");
+        Image alonzo = new Image("Alonzo.PNG");
         ImageView view = new ImageView(alonzo);
         view.setX(225);
         view.setY(225);
@@ -91,7 +84,6 @@ public class HelloApplication extends Application {
 
 
 
-            //thread.start();
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
             Alonzo alonzo1 = new Alonzo(1, true, score);
@@ -104,40 +96,42 @@ public class HelloApplication extends Application {
             stage.setScene(easyMode);
             view.setFitHeight(alonzo1.getY());
             view.setFitWidth(alonzo1.getX());
-           // MouseEvent.MOUSE_CLICKED{
-
-            }
-            view.setOnMouseClicked(a->{
-                if(a.getX() > view.getX() && a.getX() < view.getX() + view.getFitWidth() && a.getY() > view.getY() && a.getY() < view.getY() + view.getFitHeight()){
-                    scoreT += 10;
-                    score.setText("Score: " + scoreT);
-                    view.setX((Math.random() * (720 - view.getFitWidth())));
-                    view.setY((Math.random() * (480 - view.getFitHeight())));
-                    System.out.println("d");
-                    if(scoreT >= 300){
-                        Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
-                        Scene win = new Scene(winGroup, 720,480, Color.DARKOLIVEGREEN);
-                        scoreT = 0;
-                        stage.setScene(win);
-                       // thread.stop();
-
-                        menu.setOnAction(c->{
-                            stage.setScene(scene);
-                        });
-                    }
-                }else{
+            easyMode.setOnMouseClicked(b->{
+                scoreT -= 30;
+                score.setText("Score: " + scoreT);
+                if(scoreT <= 0){
                     System.out.println("p");
                     Group loseGroup = new Group(rect1, rect2, rect3, youLose, menu);
                     Scene lose = new Scene(loseGroup, 720, 480, Color.RED);
                     stage.setScene(lose);
+                    scoreT = 50;
                 }
             });
 
-        });
+            });
+            view.setOnMouseClicked(a->{
+                if(a.getX() > view.getX() && a.getX() < view.getX() + view.getFitWidth() && a.getY() > view.getY() && a.getY() < view.getY() + view.getFitHeight()) {
+                    scoreT += 40;
+                    score.setText("Score: " + scoreT);
+                    view.setX((Math.random() * (720 - view.getFitWidth())));
+                    view.setY((Math.random() * (480 - view.getFitHeight())));
+                    System.out.println("d");
+                    if (scoreT >= 340) {
+                        Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
+                        Scene win = new Scene(winGroup, 720, 480, Color.DARKOLIVEGREEN);
+                        scoreT = 50;
+                        stage.setScene(win);
+                    }
+                    menu.setOnAction(c -> {
+                        stage.setScene(scene);
+                    });
+
+
+                }
+                });
+
         normal.setOnAction(b->{
             System.out.println("Normal");
-            //score.setTranslateX(-300);
-            // score.setTranslateY(-200);
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
             Alonzo alonzo1 = new Alonzo(2, true, score);
@@ -150,16 +144,30 @@ public class HelloApplication extends Application {
             stage.setScene(normalMode);
             view.setFitHeight(alonzo1.getY());
             view.setFitWidth(alonzo1.getX());
+            normalMode.setOnMouseClicked(e->{
+                scoreT -= 30;
+                score.setText("Score: " + scoreT);
+                if(scoreT <= 0){
+                    System.out.println("p");
+                    Group loseGroup = new Group(rect1, rect2, rect3, youLose, menu);
+                    Scene lose = new Scene(loseGroup, 720, 480, Color.RED);
+                    stage.setScene(lose);
+                    scoreT = 50;
+                }
+                menu.setOnAction(a->{
+                    stage.setScene(scene);
+                });
+            });
             view.setOnMouseClicked(a->{
                 if(a.getX() > view.getX() && a.getX() < view.getX() + view.getFitWidth() && a.getY() > view.getY() && a.getY() < view.getY() + view.getFitHeight()){
-                    scoreT += 10;
+                    scoreT += 40;
                     score.setText("Score: " + scoreT);
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
-                    if(scoreT >= 300){
+                    if(scoreT >= 340){
                         Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
                         Scene win = new Scene(winGroup, 720,480, Color.DARKOLIVEGREEN);
-                        scoreT = 0;
+                        scoreT = 50;
                         stage.setScene(win);
                         menu.setOnAction(e->{
                             stage.setScene(scene);
@@ -170,8 +178,6 @@ public class HelloApplication extends Application {
         });
         hard.setOnAction(c->{
             System.out.println("Hard");
-            //score.setTranslateX(-300);
-            // score.setTranslateY(-200);
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
             Alonzo alonzo1 = new Alonzo(4, false, score);
@@ -184,14 +190,28 @@ public class HelloApplication extends Application {
             stage.setScene(hardMode);
             view.setFitHeight(alonzo1.getY());
             view.setFitWidth(alonzo1.getX());
+            hardMode.setOnMouseClicked(e->{
+                scoreT -= 30;
+                score.setText("Score: " + scoreT);
+                if(scoreT <= 0){
+                    System.out.println("p");
+                    Group loseGroup = new Group(rect1, rect2, rect3, youLose, menu);
+                    Scene lose = new Scene(loseGroup, 720, 480, Color.RED);
+                    stage.setScene(lose);
+                    scoreT = 50;
+                }
+                menu.setOnAction(a->{
+                    stage.setScene(scene);
+                });
+            });
             view.setOnMouseClicked(a->{
                 if(a.getX() > view.getX() && a.getX() < view.getX() + view.getFitWidth() && a.getY() > view.getY() && a.getY() < view.getY() + view.getFitHeight()){
-                    scoreT += 10;
+                    scoreT += 40;
                     score.setText("Score: " + scoreT);
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
-                    if(scoreT >= 300){
-                        scoreT = 0;
+                    if(scoreT >= 340){
+                        scoreT = 50;
                         Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
                         Scene win = new Scene(winGroup, 720,480, Color.DARKOLIVEGREEN);
                         stage.setScene(win);
