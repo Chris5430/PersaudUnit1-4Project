@@ -111,7 +111,11 @@ public class HelloApplication extends Application {
             });
             view.setOnMouseClicked(a->{
                 if(a.getX() > view.getX() && a.getX() < view.getX() + view.getFitWidth() && a.getY() > view.getY() && a.getY() < view.getY() + view.getFitHeight()) {
-                    scoreT += 40;
+                   // scoreT += 40;
+                    for (int i = 1; i <= 40; i++){
+                        scoreT++;
+                        score.setText("Score: " + scoreT);
+                    }
                     score.setText("Score: " + scoreT);
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
