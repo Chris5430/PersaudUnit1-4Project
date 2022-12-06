@@ -34,7 +34,7 @@ public class HelloApplication extends Application {
         Label score = new Label("Score: " + scoreT);
 
 
-
+        //Making the background
         Rectangle rect1 = new Rectangle(140,400, Color.SADDLEBROWN);
         rect1.setX(120);
         rect1.setY(80);
@@ -42,18 +42,21 @@ public class HelloApplication extends Application {
         rect2.setX(480);
         rect2.setY(80);
         Rectangle rect3 = new Rectangle(720, 100, Color.GREEN);
+        //Making buttons to select difficulty
         Button easy = new Button();
         easy.setText("Easy");
         Button normal = new Button();
         normal.setText("Normal");
         Button hard = new Button();
         hard.setText("Hard");
+        //Making Alonzo
         Image alonzo = new Image("Alonzo.PNG");
         ImageView view = new ImageView(alonzo);
         view.setX(225);
         view.setY(225);
         view.setFitWidth(225);
         view.setFitHeight(255);
+        //Setting up the scene
         Group root = new Group(rect1, rect2, rect3, easy, normal, hard, view);
         easy.setTranslateX(180);
         easy.setTranslateY(60);
@@ -67,6 +70,7 @@ public class HelloApplication extends Application {
 
         stage.setScene(scene);
         stage.show();
+        //Making what it shows when you win and lose
         Label youWin = new Label("You win!!");
         youWin.setTranslateX(160);
         youWin.setTranslateY(90);
@@ -79,6 +83,7 @@ public class HelloApplication extends Application {
         youWin.setFont(new Font("Arial", 90));
         youLose.setFont(new Font("Arial", 90));
 
+        //Sets the scene when easy is selected
         easy.setOnAction(e->{
             System.out.println("Easy");
 
@@ -86,6 +91,7 @@ public class HelloApplication extends Application {
 
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
+            //Creates Alonzo object to get his size for this difficulty
             Alonzo alonzo1 = new Alonzo(1, true, score);
             if(alonzo1.getDayOrNight()){
                 color = Color.DARKCYAN;
@@ -97,10 +103,11 @@ public class HelloApplication extends Application {
             view.setFitHeight(alonzo1.getY());
             view.setFitWidth(alonzo1.getX());
             easyMode.setOnMouseClicked(b->{
+                //Decreases score when user clicks somewhere other than Alonzo
                 scoreT -= 30;
                 score.setText("Score: " + scoreT);
                 if(scoreT <= 0){
-                    System.out.println("p");
+                    //Player loses when score reaches 0
                     Group loseGroup = new Group(rect1, rect2, rect3, youLose, menu);
                     Scene lose = new Scene(loseGroup, 720, 480, Color.RED);
                     stage.setScene(lose);
@@ -112,20 +119,23 @@ public class HelloApplication extends Application {
             view.setOnMouseClicked(a->{
                 if(a.getX() > view.getX() && a.getX() < view.getX() + view.getFitWidth() && a.getY() > view.getY() && a.getY() < view.getY() + view.getFitHeight()) {
                    // scoreT += 40;
+                    //Increases score by 40 when Alonzo is clicked
                     for (int i = 1; i <= 40; i++){
                         scoreT++;
                         score.setText("Score: " + scoreT);
                     }
                     score.setText("Score: " + scoreT);
+                    //Gets a random position that for Alonzo to go without going off the screen
                     view.setX((Math.random() * (720 - view.getFitWidth())));
                     view.setY((Math.random() * (480 - view.getFitHeight())));
-                    System.out.println("d");
                     if (scoreT >= 340) {
+                        //Player wins when score reaches 340
                         Group winGroup = new Group(rect1, rect2, rect3, youWin, menu);
                         Scene win = new Scene(winGroup, 720, 480, Color.DARKOLIVEGREEN);
                         scoreT = 50;
                         stage.setScene(win);
                     }
+                    //Button to go back to menu
                     menu.setOnAction(c -> {
                         stage.setScene(scene);
                     });
@@ -133,7 +143,7 @@ public class HelloApplication extends Application {
 
                 }
                 });
-
+        //Same thing as easy difficulty but with smaller alonzo
         normal.setOnAction(b->{
             System.out.println("Normal");
             Group root1 = new Group(rect1, rect2, rect3, score, view);
@@ -152,7 +162,6 @@ public class HelloApplication extends Application {
                 scoreT -= 30;
                 score.setText("Score: " + scoreT);
                 if(scoreT <= 0){
-                    System.out.println("p");
                     Group loseGroup = new Group(rect1, rect2, rect3, youLose, menu);
                     Scene lose = new Scene(loseGroup, 720, 480, Color.RED);
                     stage.setScene(lose);
@@ -180,6 +189,7 @@ public class HelloApplication extends Application {
                 }
             });
         });
+        //Same thing as normal difficulty with an even smaller Alonzo
         hard.setOnAction(c->{
             System.out.println("Hard");
             Group root1 = new Group(rect1, rect2, rect3, score, view);
