@@ -92,7 +92,7 @@ public class HelloApplication extends Application {
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
             //Creates Alonzo object to get his size for this difficulty
-            Alonzo alonzo1 = new Alonzo(1, true, score);
+            Alonzo alonzo1 = new Alonzo(1, true);
             if(alonzo1.getDayOrNight()){
                 color = Color.DARKCYAN;
             }else{
@@ -148,7 +148,7 @@ public class HelloApplication extends Application {
             System.out.println("Normal");
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
-            Alonzo alonzo1 = new Alonzo(2, true, score);
+            Alonzo alonzo1 = new Alonzo(2, true);
             if(alonzo1.getDayOrNight()){
                 color = Color.DARKCYAN;
             }else{
@@ -194,7 +194,7 @@ public class HelloApplication extends Application {
             System.out.println("Hard");
             Group root1 = new Group(rect1, rect2, rect3, score, view);
             Color color;
-            Alonzo alonzo1 = new Alonzo(4, false, score);
+            Alonzo alonzo1 = new Alonzo(4, false);
             if(alonzo1.getDayOrNight()){
                 color = Color.DARKCYAN;
             }else{
